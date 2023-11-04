@@ -8,10 +8,10 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import Training
 
-    """
-    Im really bad a python so a lot of code was 'borrowed' from our proffesors if you think you can improve it give it a go 
-    also im never again writing a code at 5am 
-    """
+"""
+Im really bad a python so a lot of code was 'borrowed' from our proffesors if you think you can improve it give it a go 
+also im never again writing a code at 5am 
+"""
 
 
 

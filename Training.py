@@ -6,6 +6,7 @@ from sklearn.model_selection import StratifiedShuffleSplit, train_test_split
 import hashlib
 import os
 
+
 TRAINING_PATH = os.path.join("datasets", "train.csv")
 
 def load_training_data(training_path=TRAINING_PATH):
@@ -38,19 +39,19 @@ training["Consumer_type"] = pd.cut(training["Consumption"],
 
 
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=69)
-for train_index, test_index in split.split(training, training["Consumer_type"]):
+for train_index, test_index in split.split(training, training["Consumer_type"]): # this line of code is broken on my machine becouse i don't have a latest pandas version and i cant update it for whatever reason
     stratifiedfd_train_set = training.loc[train_index]
     stratified_test_set = training.loc[test_index]
-    
-# def consumer_type_proportions(data):
-#     return data["Consumer_type"].value_counts() / len(data)
+        
+def consumer_type_proportions(data):
+    return data["Consumer_type"].value_counts() / len(data)
 
-# train_set, test_set = train_test_split(training, test_size=0.2, random_state=69)
+train_set, test_set = train_test_split(training, test_size=0.2, random_state=69)
 
-# compare_props = pd.DataFrame({
-#     "Overall": consumer_type_proportions(training),
-#     "Stratified": consumer_type_proportions(stratified_test_set),
-#     "Random": consumer_type_proportions(test_set),
-# }).sort_index()
-# compare_props["Rand. %error"] = 100 * compare_props["Random"] / compare_props["Overall"] - 100
-# compare_props["Strat. %error"] = 100 * compare_props["Stratified"] / compare_props["Overall"] - 100
+compare_props = pd.DataFrame({
+    "Overall": consumer_type_proportions(training),
+    "Stratified": consumer_type_proportions(stratified_test_set),
+    "Random": consumer_type_proportions(test_set),
+}).sort_index()
+compare_props["Rand. %error"] = 100 * compare_props["Random"] / compare_props["Overall"] - 100
+compare_props["Strat. %error"] = 100 * compare_props["Stratified"] / compare_props["Overall"] - 100
