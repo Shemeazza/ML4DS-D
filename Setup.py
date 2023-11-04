@@ -1,19 +1,27 @@
 import sys
 assert sys.version_info >= (3, 5)
-
 import sklearn 
 assert sklearn.__version__ >= "0.20"
-
-import numpy as np
 import os
-import urllib.request
-import pandas as pd
 import matplotlib
-import numpy
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import Training
 
-# %matplotlib inline
+    """
+    Im really bad a python so a lot of code was 'borrowed' from our proffesors if you think you can improve it give it a go 
+    also im never again writing a code at 5am 
+    """
+
+
+
+
+
+
+
+
+
+# %matplotlib inline                    #uncomment this line if using Jupyter or google collab
 mpl.rc('axes', labelsize = 14)
 mpl.rc('xtick', labelsize = 12)
 mpl.rc('ytick', labelsize = 12)
@@ -30,12 +38,4 @@ def save_fig(fig_id, tight_layout=True, fig_extension="png", resolution=300 ):
         plt.tight_layout()
     plt.savefig(path, format = fig_extension, dpi = resolution)
 
-TRAINING_PATH = os.path.join("datasets", "train.csv")
 
-def load_training_data(training_path=TRAINING_PATH):
-    csv_path = TRAINING_PATH
-    return pd.read_csv(csv_path)
-
-training = load_training_data()
-
-training.head()
