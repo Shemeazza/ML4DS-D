@@ -9,7 +9,7 @@ import os
 TRAINING_PATH = os.path.join("datasets", "train.csv")
 
 def load_training_data(training_path=TRAINING_PATH):
-    csv_path = TRAINING_PATH
+    csv_path = training_path
     return pd.read_csv(csv_path)
 
 training = load_training_data()
