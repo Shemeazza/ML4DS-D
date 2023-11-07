@@ -1,5 +1,5 @@
 
 .vscode/settings.json
-*.ipynb
+# *.ipynb
 *.png
 *.pyc
