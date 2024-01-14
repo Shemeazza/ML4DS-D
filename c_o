@@ -1,0 +1,110 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+from sklearn.preprocessing import LabelEncoder
+
+# Load the dataset
+def load_data(file_path):
+    """
+    Load the water consumption dataset from a CSV file.
+    
+    Parameters:
+    - file_path: str, path to the CSV file containing the dataset.
+    
+    Returns:
+    - df: pandas DataFrame, the loaded dataset.
+    """
+    df = pd.read_csv(file_path)
+    return df
+
+# Preprocess the dataset
+def preprocess_data(df):
+    """
+    Preprocess the dataset by handling missing values and encoding categorical features.
+    
+    Parameters:
+    - df: pandas DataFrame, the dataset to preprocess.
+    
+    Returns:
+    - df: pandas DataFrame, the preprocessed dataset.
+    """
+    # Handle missing values if necessary (e.g., fill or drop)
+    df = df.dropna()  # Example: dropping rows with missing values
+    
+    # Encode categorical features
+    label_encoder = LabelEncoder()
+    df['Installation_zone'] = label_encoder.fit_transform(df['Installation_zone'])
+    
+    return df
+
+# Split the dataset into training and testing sets
+def split_dataset(df, label_column):
+    """
+    Split the dataset into training and testing sets.
+    
+    Parameters:
+    - df: pandas DataFrame, the dataset to split.
+    - label_column: str, the name of the column containing the labels.
+    
+    Returns:
+    - X_train, X_test, y_train, y_test: arrays, the split dataset.
+    """
+    X = df.drop(label_column, axis=1)
+    y = df[label_column]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    return X_train, X_test, y_train, y_test
+
+# Build and evaluate the classifier
+def build_and_evaluate_classifier(X_train, y_train, X_test, y_test):
+    """
+    Build and evaluate a multiclass classifier using Random Forest.
+    
+    Parameters:
+    - X_train, y_train: arrays, training data and labels.
+    - X_test, y_test: arrays, testing data and labels.
+    
+    Returns:
+    - classifier: the trained classifier.
+    - report: str, the classification report.
+    """
+    # Initialize the classifier
+    classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+    
+    # Train the classifier
+    classifier.fit(X_train, y_train)
+    
+    # Predict on the test set
+    y_pred = classifier.predict(X_test)
+    
+    # Evaluate the classifier
+    report = classification_report(y_test, y_pred)
+    
+    return classifier, report
+
+# Main function to run the classification task
+def main():
+    """
+    Main function to run the classification task.
+    """
+    # Load the dataset
+    file_path = 'water_consumption.csv'  # Replace with the actual file path
+    df = load_data(file_path)
+    
+    # Preprocess the dataset
+    df = preprocess_data(df)
+    
+    # Split the dataset
+    X_train, X_test, y_train, y_test = split_dataset(df, 'Consumer_type')
+    
+    # Build and evaluate the classifier
+    classifier, report = build_and_evaluate_classifier(X_train, y_train, X_test, y_test)
+    
+    # Print the classification report
+    print(report)
+    
+    # Save the classifier and results (not shown here, but involves saving to files)
+    # ...
+
+if __name__ == "__main__":
+    main()
